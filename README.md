@@ -1,4 +1,4 @@
-# `#ADSKVYTD` Express 快速开始
+# Express 快速开始
 
 和 Koa 类似，Express 也是采用中间件的机制来处理响应。下面是全局响应：
 
