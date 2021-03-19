@@ -1,7 +1,11 @@
 const express = require('express')
+const withRouters = require('./routes')
+
 const app = express()
 
-// 全局中间件
+app.use(express.json())
+withRouters(app)
+
 app.use((req, res) => {
   res.send({ ping: 'pong' })
 })
