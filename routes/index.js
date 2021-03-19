@@ -1,5 +1,5 @@
-const posts = require('./posts')
+const post = require('./post')
 
 module.exports = app => {
-  app.use('/post', posts)
+  app.use('/post', post)
 }

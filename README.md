@@ -97,3 +97,46 @@ http POST :3000/post name='John Snow' age:=29 title=KingInTheNorth
 ```
 
 https://devhints.io/httpie
+
+## 连接到 MongoDB Atlas
+
+找到数据库集群（Clusters），点击 CONNECT 可以获得连接到数据库的地址。地址类似
+
+```text
+mongodb+srv://<user>:<password>@<host>/<database>?retryWrites=true&w=majority
+```
+
+可以注意到这里除了 `mongodb` 协议，还有 `srv` 协议。关于 SRV 记录见：
+
+SRV 记录 - 维基百科，自由的百科全书
+https://zh.wikipedia.org/wiki/SRV%E8%AE%B0%E5%BD%95
+
+简而言之是 DNS 中的一条记录，用于发现特定服务的端口号。
+
+官方给出的例子：
+
+```js
+// 创建客户端的类
+const { MongoClient } = require('mongodb');
+
+// 创建客户端并配置连接参数
+const uri = 'mongodb+srv://<**>';
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// 创建连接
+client.connect(err => {
+  // 连接失败可处理 err
+  const collection = client.db('test').collection('devices');
+  // 在这里操作数据库中的集合
+  client.close();
+});
+```
+
+实际上除了回调函数的用法，也有返回的 Promise 的重载函数：
+
+```typescript
+connect(): Promise<MongoClient>;
+connect(callback: MongoCallback<MongoClient>): void;
+```
+
+注意：如果没有调用客户端的 `close()` 方法，那么程序不会退出。因此在测试数据库操作的代码中一定要调用该方法关闭连接。
